@@ -12,6 +12,7 @@ class BayesianScorer
     gameRanking: 2 #rank in game
   ###
   updatePlayerSkills: (playerAndScoreObjectsArray) ->
+    @validateInputArray playerAndScoreObjectsArray
     returnArray = _.cloneDeep playerAndScoreObjectsArray
     for playerOne in returnArray
       meanStrengthChangePartials = []
@@ -47,12 +48,20 @@ class BayesianScorer
 
   validateInputArray:(playerAndScoreObjectsArray) ->
     for playerAndScoreObject in playerAndScoreObjectsArray
-      isValid = @validatePlayerAndScoreObject playerAndScoreObject
-      throw new Error "Invalid player/score array passed to scoring function" unless isValid
+      @validateRequiredProperties playerAndScoreObject
+    @validateUniquePlayerIDs playerAndScoreObjectsArray
 
-  validatePlayerAndScoreObject: (playerAndScoreObject) ->
-    #TODO: object validation
-    return true
+  validateRequiredProperties: (playerAndScoreObject) ->
+    throw new Error("Player object is missing ID.") unless _.has playerAndScoreObject, 'id'
+    throw new Error("Player object is missing mean strength") unless _.has playerAndScoreObject, 'meanStrength'
+    throw new Error("Player object is missing standard deviation") unless _.has playerAndScoreObject, 'standardDeviation'
+    throw new Error("Player object is missing game ranking") unless _.has playerAndScoreObject, 'gameRanking'
+
+  validateUniquePlayerIDs: (playerAndScoreObjectsArray) ->
+    ids = _.pluck(playerAndScoreObjectsArray, 'id')
+    uniqueIDs = _.uniq ids
+    throw new Error("All IDs must be unique") if uniqueIDs.length isnt ids.length
+
 
   calculateTotalPerformanceUncertainty: (playerOneStandardDeviation, playerTwoStandardDeviation) ->
     playerOneStandardDeviationSquared = Math.pow playerOneStandardDeviation,2

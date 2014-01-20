@@ -34,10 +34,36 @@ describe "Bayesian Scorer Class", ->
     scorer = playerOne = playerTwo = playerThree = undefined
     beforeEach ->
       scorer = new Scorer()
-    it "Should check for duplicate IDs", ->
-      return
-    it "Should check that the required parameters are present in each object", ->
-      return
+      playerOne = {
+        id: "125012f315",
+        meanStrength: 530,
+        standardDeviation:6.5
+        gameRanking:3
+      }
+      playerTwo = {
+        id:"21fa350f931",
+        meanStrength:230,
+        standardDeviation:35,
+        gameRanking:2
+      }
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:25,
+        standardDeviation:(25/3),
+        gameRanking:1
+      }
+    it "should check for duplicate IDs", ->
+      playerTwo.id = "125012f315"
+      playerObjectArray = [playerOne,playerTwo,playerThree]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("All IDs must be unique"))
+    it "should check that the required parameters are present in each object", ->
+      playerOne = {
+        meanStrength: 530,
+        standardDeviation:6.5
+        gameRanking:3
+      }
+      playerObjectArray = [playerOne,playerTwo,playerThree]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Player object is missing ID."))
     it "Should enforce that more than 1 object is present to rank", ->
       return
     it "Should enforce that strength and standard deviation are non-negative", ->

@@ -1,8 +1,8 @@
-class BayesianScoring
+class BayesianScorer
   constructor: (scoreUncertainty = (25/6),k=0.0001,scoreStandardDeviationCoefficient=1.8) ->
-    @scoreUncertainty = scoreUncertainty #set uncertainty in scores
-    @k = k #small positive value to avoid negative standard deviations
-    @scoreStandardDeviationCoefficient = scoreStandardDeviationCoefficient
+    @scoreUncertainty ?= scoreUncertainty #set uncertainty in scores
+    @k ?= k #small positive value to avoid negative standard deviations
+    @scoreStandardDeviationCoefficient ?= scoreStandardDeviationCoefficient
   ###sample playerAndScoreObject would be
   {
     playerID: 1,
@@ -15,7 +15,8 @@ class BayesianScoring
       meanStrengthChangePartials = []
       squaredStandardDeviationChangePartials = []
       for playerTwo in (player for player in playerAndScoreObjectsArray when player isnt playerOne) #equality may cause issues
-        pairwisePerformanceUncertainty = @calculateTotalPerformanceUncertainty playerOne.standardDeviation, playerTwo.standardDeviation
+        pairwisePerformanceUncertainty = @calculateTotalPerformanceUncertainty playerOne.standardDeviation,
+                                          playerTwo.standardDeviation
         chanceOfPlayerOneBeatingPlayerTwo = @calculateChanceOfPlayerOneBeatingPlayerTwo playerOne.meanStrength,
                                             playerTwo.meanStrength, pairwisePerformanceUncertainty
         chanceOfPlayerTwoBeatingPlayerOne = @calculateChanceOfPlayerTwoBeatingPlayerOne playerTwo.meanStrength,
@@ -47,6 +48,7 @@ class BayesianScoring
       throw new Error "Invalid player/score array passed to scoring function" unless isValid
 
   validatePlayerAndScoreObject: (playerAndScoreObject) ->
+    #TODO: object validation
     return true
 
   calculateTotalPerformanceUncertainty: (playerOneStandardDeviation, playerTwoStandardDeviation) ->
@@ -97,6 +99,8 @@ class BayesianScoring
     player.standardDeviation = Math.sqrt updatedPlayerSquaredStandardDeviation
     return
 
+
+module.exports = BayesianScorer
 
 
 

@@ -8,6 +8,14 @@
         "url":"http://github.com/schmatz/bayesian-scoring/issues",
         "email":"michael@codecombat.com"
     },
-    "license":"MIT"
+    "license":"MIT",
+    "devDependencies": {
+        "jasmine-node": "",
+        "coffee-script": ">=1.3"
+    },
+    "scripts": {
+        "test": "jasmine-node --coffee ."
+    }
+
 
 }

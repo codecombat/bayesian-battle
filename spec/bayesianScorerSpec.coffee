@@ -115,24 +115,29 @@ describe "Bayesian Scorer Class", ->
       scorer = new Scorer()
       playerOne = {
         id: "125012f315",
-        meanStrength: 530,
+        meanStrength: 28,
         standardDeviation:6.5
         gameRanking:2
       }
       playerTwo = {
         id:"21fa350f931",
-        meanStrength:230,
-        standardDeviation:35,
+        meanStrength:22,
+        standardDeviation:8.0,
         gameRanking:1
       }
       playerThree = {
         id:"as359012f3521",
-        meanStrength:25,
+        meanStrength:23,
         standardDeviation:(25/3),
         gameRanking:0
       }
     it "Should adjust rankings properly", ->
-      return
+      oldPlayerArray = [playerOne, playerTwo,playerThree]
+      updatedPlayerArray = scorer.updatePlayerSkills oldPlayerArray
+      #TODO: manually calculate the correct values and check against the program
+      console.log "Player One Old Score:#{oldPlayerArray[0].meanStrength}, New Score:#{updatedPlayerArray[0].meanStrength}"
+      console.log "Player One Old stddev:#{oldPlayerArray[2].standardDeviation}, New stddev:#{updatedPlayerArray[2].standardDeviation}"
+      expect(updatedPlayerArray[0].meanStrength).toBeLessThan oldPlayerArray[0].meanStrength
     it "Shouldn't adjust rankings if two identical players draw against each other", ->
       return
 

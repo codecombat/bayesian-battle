@@ -40,7 +40,7 @@ class BayesianScorer
       meanStrengthChangePartialSum = @sumArray(meanStrengthChangePartials)
       squaredStandardDeviationChangePartialSum = @sumArray(squaredStandardDeviationChangePartials)
       @updateSkills playerOne, meanStrengthChangePartialSum, squaredStandardDeviationChangePartialSum
-      return returnArray
+    return returnArray
 
   calculatePlayerScoreFromPlayerMetrics: (playerMeanStrength, playerStandardDeviation) ->
     return playerMeanStrength - @scoreStandardDeviationCoefficient * playerStandardDeviation

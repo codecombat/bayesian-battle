@@ -1,0 +1,13 @@
+{
+    "name": "bayesian-scoring",
+    "version": "0.0.1",
+    "description":"A free implementation of the Bayesian Approximation based game scoring ranking system described by HackerRank",
+    "keywords":["bayesian","scoring","ranking"],
+    "homepage":"http://github.com/schmatz/bayesian-scoring",
+    "bugs": {
+        "url":"http://github.com/schmatz/bayesian-scoring/issues",
+        "email":"michael@codecombat.com"
+    },
+    "license":"MIT"
+
+}

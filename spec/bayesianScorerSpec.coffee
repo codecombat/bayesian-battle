@@ -38,19 +38,19 @@ describe "Bayesian Scorer Class", ->
         id: "125012f315",
         meanStrength: 530,
         standardDeviation:6.5
-        gameRanking:3
+        gameRanking:2
       }
       playerTwo = {
         id:"21fa350f931",
         meanStrength:230,
         standardDeviation:35,
-        gameRanking:2
+        gameRanking:1
       }
       playerThree = {
         id:"as359012f3521",
         meanStrength:25,
         standardDeviation:(25/3),
-        gameRanking:1
+        gameRanking:0
       }
     it "should check for duplicate IDs", ->
       playerTwo.id = "125012f315"
@@ -64,16 +64,73 @@ describe "Bayesian Scorer Class", ->
       }
       playerObjectArray = [playerOne,playerTwo,playerThree]
       expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Player object is missing ID."))
-    it "Should enforce that more than 1 object is present to rank", ->
-      return
-    it "Should enforce that strength and standard deviation are non-negative", ->
-      return
+    it "should enforce that more than 1 object is present to rank", ->
+      playerObjectArray = [playerOne]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Input array must contain two objects or more"))
+
+    it "should enforce that mean strength is greater than 0", ->
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:-5,
+        standardDeviation:5,
+        gameRanking:1
+      }
+      playerObjectArray = [playerOne,playerTwo,playerThree]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Mean strength must be greater than 0."))
+
+    it "should enforce that standard deviation is greater than 0", ->
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:300,
+        standardDeviation:0,
+        gameRanking:1
+      }
+      playerObjectArray = [playerOne,playerTwo,playerThree]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Standard Deviation must be greater than 0"))
+
+    it "should enforce that game ranking is greater than or equal to 0", ->
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:300,
+        standardDeviation:0,
+        gameRanking:1
+      }
+      playerObjectArray = [playerOne,playerTwo,playerThree]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Standard Deviation must be greater than 0"))
+
+    it "should enforce that the game ranking is less than the total amount of players", ->
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:300,
+        standardDeviation:1,
+        gameRanking:3
+      }
+      playerObjectArray = [playerOne,playerTwo,playerThree]
+      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Game ranking must be less than number of players"))
+
 
   describe "Ranking", ->
-    scorer = undefined
+    scorer = playerOne = playerTwo = playerThree = undefined
     beforeEach ->
       scorer = new Scorer()
-
+      playerOne = {
+        id: "125012f315",
+        meanStrength: 530,
+        standardDeviation:6.5
+        gameRanking:2
+      }
+      playerTwo = {
+        id:"21fa350f931",
+        meanStrength:230,
+        standardDeviation:35,
+        gameRanking:1
+      }
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:25,
+        standardDeviation:(25/3),
+        gameRanking:0
+      }
     it "Should adjust rankings properly", ->
       return
     it "Shouldn't adjust rankings if two identical players draw against each other", ->
@@ -84,18 +141,47 @@ describe "Bayesian Scorer Class", ->
     beforeEach ->
       scorer = new Scorer()
     it "Should generate the proper value for a win", ->
-      return
+      expect(scorer.calculatePairwiseGameOutcomeValue 0,1).toEqual 1
     it "Should generate the proper value for a draw", ->
-      return
+      expect(scorer.calculatePairwiseGameOutcomeValue 1,1).toEqual 0.5
     it "Should generate the proper value for a loss", ->
-      return
+      expect(scorer.calculatePairwiseGameOutcomeValue 1,0).toEqual 0
+
   describe "Outcome probability calculation", ->
+    scorer = playerOne = playerTwo = playerThree = undefined
+    beforeEach ->
+      scorer = new Scorer()
+      playerOne = {
+        id: "125012f315",
+        meanStrength: 35,
+        standardDeviation:10
+        gameRanking:2
+      }
+      playerTwo = {
+        id:"21fa350f931",
+        meanStrength:23,
+        standardDeviation:2,
+        gameRanking:1
+      }
+      playerThree = {
+        id:"as359012f3521",
+        meanStrength:25,
+        standardDeviation:(25/3),
+        gameRanking:0
+      }
+
     it "Should generate a high probability for a higher ranked player beating a lower ranked player", ->
-      return
+      performanceUncertainty = scorer.calculateTotalPerformanceUncertainty(playerOne.standardDeviation, playerTwo.standardDeviation)
+      chanceOfPlayerOneBeatingPlayerTwo = scorer.calculateChanceOfPlayerOneBeatingPlayerTwo(playerOne.meanStrength,playerTwo.meanStrength,performanceUncertainty)
+      expect(chanceOfPlayerOneBeatingPlayerTwo).toBeGreaterThan 0.5
     it "Should generate a low probability for a lower ranked player beating a higher ranked player", ->
-      return
+      performanceUncertainty = scorer.calculateTotalPerformanceUncertainty(playerOne.standardDeviation, playerTwo.standardDeviation)
+      chanceOfPlayerOneBeatingPlayerTwo = scorer.calculateChanceOfPlayerTwoBeatingPlayerOne(playerTwo.meanStrength,playerOne.meanStrength,performanceUncertainty)
+      expect(chanceOfPlayerOneBeatingPlayerTwo).toBeLessThan 0.5
     it "Should generate a roughly equal probability for two equal players matching off against each other", ->
-      return
+      performanceUncertainty = scorer.calculateTotalPerformanceUncertainty(playerOne.standardDeviation, playerOne.standardDeviation)
+      chanceOfPlayerDefeatingSelf = scorer.calculateChanceOfPlayerOneBeatingPlayerTwo(playerOne.meanStrength,playerOne.meanStrength,performanceUncertainty)
+      expect(chanceOfPlayerDefeatingSelf).toEqual 0.5
 
   describe "Score calculation", ->
     it "Should calculate a higher score for a player with higher strength", ->

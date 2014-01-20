@@ -47,8 +47,10 @@ class BayesianScorer
 
 
   validateInputArray:(playerAndScoreObjectsArray) ->
+    @validatePlayerArrayLength(playerAndScoreObjectsArray)
     for playerAndScoreObject in playerAndScoreObjectsArray
       @validateRequiredProperties playerAndScoreObject
+      @validatePlayerObjectValues playerAndScoreObject, playerAndScoreObjectsArray.length
     @validateUniquePlayerIDs playerAndScoreObjectsArray
 
   validateRequiredProperties: (playerAndScoreObject) ->
@@ -61,6 +63,16 @@ class BayesianScorer
     ids = _.pluck(playerAndScoreObjectsArray, 'id')
     uniqueIDs = _.uniq ids
     throw new Error("All IDs must be unique") if uniqueIDs.length isnt ids.length
+
+  validatePlayerArrayLength: (playerAndScoreObjectsArray) ->
+    throw new Error("Input array must contain two objects or more") if playerAndScoreObjectsArray.length <=1
+
+  validatePlayerObjectValues: (playerAndScoreObject, arrayLength) ->
+    throw new Error("Mean strength must be greater than 0.") if playerAndScoreObject.meanStrength <= 0
+    throw new Error("Standard Deviation must be greater than 0") if playerAndScoreObject.standardDeviation <=0
+    throw new Error("Game ranking must be greater than or equal to 0") if playerAndScoreObject.gameRanking < 0
+    throw new Error("Game ranking must be less than number of players") if playerAndScoreObject.gameRanking >= arrayLength
+
 
 
   calculateTotalPerformanceUncertainty: (playerOneStandardDeviation, playerTwoStandardDeviation) ->
@@ -96,9 +108,9 @@ class BayesianScorer
     return uncertaintyCoefficient * Math.pow(uncertaintyCoefficient,2) * probabilityProduct
 
   calculatePairwiseGameOutcomeValue: (playerOneGameRanking, playerTwoGameRanking) ->
-    return 1 if playerOneGameRanking > playerTwoGameRanking
+    return 1 if playerOneGameRanking < playerTwoGameRanking
     return 0.5 if playerOneGameRanking == playerTwoGameRanking
-    return 0 if playerOneGameRanking < playerTwoGameRanking
+    return 0 if playerOneGameRanking > playerTwoGameRanking
 
   sumArray: (inputArray) ->
     return inputArray.reduce (elementOne, elementTwo) -> elementOne + elementTwo

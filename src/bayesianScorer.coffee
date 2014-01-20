@@ -1,3 +1,4 @@
+_ = require 'lodash'
 class BayesianScorer
   constructor: (scoreUncertainty = (25/6),k=0.0001,scoreStandardDeviationCoefficient=1.8) ->
     @scoreUncertainty ?= scoreUncertainty #set uncertainty in scores
@@ -11,10 +12,11 @@ class BayesianScorer
     gameRanking: 2 #rank in game
   ###
   updatePlayerSkills: (playerAndScoreObjectsArray) ->
-    for playerOne in playerAndScoreObjectsArray
+    returnArray = _.cloneDeep playerAndScoreObjectsArray
+    for playerOne in returnArray
       meanStrengthChangePartials = []
       squaredStandardDeviationChangePartials = []
-      for playerTwo in (player for player in playerAndScoreObjectsArray when player isnt playerOne) #equality may cause issues
+      for playerTwo in (player for player in returnArray when player isnt playerOne) #equality may cause issues
         pairwisePerformanceUncertainty = @calculateTotalPerformanceUncertainty playerOne.standardDeviation,
                                           playerTwo.standardDeviation
         chanceOfPlayerOneBeatingPlayerTwo = @calculateChanceOfPlayerOneBeatingPlayerTwo playerOne.meanStrength,
@@ -37,6 +39,7 @@ class BayesianScorer
       meanStrengthChangePartialSum = @sumArray(meanStrengthChangePartials)
       squaredStandardDeviationChangePartialSum = @sumArray(squaredStandardDeviationChangePartials)
       @updateSkills playerOne, meanStrengthChangePartialSum, squaredStandardDeviationChangePartialSum
+      return returnArray
 
   calculatePlayerScoreFromPlayerMetrics: (playerMeanStrength, playerStandardDeviation) ->
     return playerMeanStrength - @scoreStandardDeviationCoefficient * playerStandardDeviation
@@ -53,10 +56,10 @@ class BayesianScorer
 
   calculateTotalPerformanceUncertainty: (playerOneStandardDeviation, playerTwoStandardDeviation) ->
     playerOneStandardDeviationSquared = Math.pow playerOneStandardDeviation,2
-    playerTwoStandardDeivationSquared = Math.pow playerTwoStandardDeviation,2
+    playerTwoStandardDeviationSquared = Math.pow playerTwoStandardDeviation,2
     scoreUncertaintySquared = Math.pow @scoreUncertainty, 2
     totalPairwiseUncertaintySquared = playerOneStandardDeviationSquared +
-      playerTwoStandardDeivationSquared +
+      playerTwoStandardDeviationSquared +
       2 * scoreUncertaintySquared
     return Math.sqrt totalPairwiseUncertaintySquared
 

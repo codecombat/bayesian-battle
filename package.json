@@ -9,6 +9,9 @@
         "email":"michael@codecombat.com"
     },
     "license":"MIT",
+    "dependencies": {
+        "lodash":""
+    },
     "devDependencies": {
         "jasmine-node": "",
         "coffee-script": ">=1.3"

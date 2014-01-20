@@ -30,6 +30,52 @@ describe "Bayesian Scorer Class", ->
       array = [1..5]
       expect(scorer.sumArray array).toEqual 15
 
-  
+  describe "Input object validation", ->
+    scorer = playerOne = playerTwo = playerThree = undefined
+    beforeEach ->
+      scorer = new Scorer()
+    it "Should check for duplicate IDs", ->
+      return
+    it "Should check that the required parameters are present in each object", ->
+      return
+    it "Should enforce that more than 1 object is present to rank", ->
+      return
+    it "Should enforce that strength and standard deviation are non-negative", ->
+      return
+
+  describe "Ranking", ->
+    scorer = undefined
+    beforeEach ->
+      scorer = new Scorer()
+
+    it "Should adjust rankings properly", ->
+      return
+    it "Shouldn't adjust rankings if two identical players draw against each other", ->
+      return
+
+  describe "Outcome value generation", ->
+    scorer = undefined
+    beforeEach ->
+      scorer = new Scorer()
+    it "Should generate the proper value for a win", ->
+      return
+    it "Should generate the proper value for a draw", ->
+      return
+    it "Should generate the proper value for a loss", ->
+      return
+  describe "Outcome probability calculation", ->
+    it "Should generate a high probability for a higher ranked player beating a lower ranked player", ->
+      return
+    it "Should generate a low probability for a lower ranked player beating a higher ranked player", ->
+      return
+    it "Should generate a roughly equal probability for two equal players matching off against each other", ->
+      return
+
+  describe "Score calculation", ->
+    it "Should calculate a higher score for a player with higher strength", ->
+      return
+
+
+
 
 

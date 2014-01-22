@@ -1,5 +1,5 @@
 _ = require 'lodash'
-class BayesianScorer
+class BayesianBattle
   constructor: (scoreUncertainty = (25/6),k=0.0001,scoreStandardDeviationCoefficient=1.8) ->
     @scoreUncertainty ?= scoreUncertainty #set uncertainty in scores
     @k ?= k #small positive value to avoid negative standard deviations

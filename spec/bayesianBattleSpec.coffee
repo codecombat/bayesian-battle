@@ -1,6 +1,6 @@
-Scorer = require '../src/bayesianScorer'
+Scorer = require '../src/bayesianBattle'
 
-describe "Bayesian Scorer Class", ->
+describe "Bayesian Battle Class", ->
   describe "Constructor tests", ->
     it "Should construct with default values", ->
       scorer = new Scorer()

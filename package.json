@@ -1,5 +1,5 @@
 {
-    "name": "bayesian-scoring",
+    "name": "bayesian-battle",
     "version": "0.0.1",
     "author": "Michael Schmatz <michael@codecombat.com> (http://github.com/schmatz)",
     "description":"A free implementation of the Bayesian Approximation based game scoring ranking system described by HackerRank",
@@ -23,8 +23,8 @@
     },
     "scripts": {
         "test": "./node_modules/.bin/jasmine-node --coffee .",
-        "build": "./node_modules/.bin/coffee --bare --compile --output lib/bayesian-scoring src/*.coffee",
-        "prepublish": "./node_modules/.bin/coffee --bare --compile --output lib/bayesian-scoring src/*.coffee",
+        "build": "./node_modules/.bin/coffee --bare --compile --output lib/bayesian-battle src/*.coffee",
+        "prepublish": "./node_modules/.bin/coffee --bare --compile --output lib/bayesian-battle src/*.coffee",
         "postpublish": "rm -rf lib"
     },
     "repository": {

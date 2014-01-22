@@ -124,7 +124,7 @@ class BayesianBattle
     return
 
 
-module.exports = BayesianScorer
+module.exports = BayesianBattle
 
 
 

@@ -4,9 +4,9 @@
     "author": "Michael Schmatz <michael@codecombat.com> (http://github.com/schmatz)",
     "description":"A free implementation of the Bayesian Approximation based game scoring ranking system described by HackerRank",
     "keywords":["bayesian","scoring","ranking"],
-    "homepage":"http://github.com/schmatz/bayesian-scoring",
+    "homepage":"http://github.com/codecombat/bayesian-battle",
     "bugs": {
-        "url":"http://github.com/schmatz/bayesian-scoring/issues",
+        "url":"http://github.com/codecombat/bayesian-battle/issues",
         "email":"michael@codecombat.com"
     },
     "license":"MIT",
@@ -29,7 +29,7 @@
     },
     "repository": {
         "type":"git",
-        "url":"https://github.com/schmatz/bayesian-scoring"
+        "url":"https://github.com/codecombat/bayesian-battle"
     }
 
 

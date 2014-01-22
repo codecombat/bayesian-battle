@@ -116,7 +116,7 @@ describe "Bayesian Scorer Class", ->
       playerOne = {
         id: "125012f315",
         meanStrength: 28,
-        standardDeviation:6.5
+        standardDeviation:0.2
         gameRanking:2
       }
       playerTwo = {
@@ -128,15 +128,16 @@ describe "Bayesian Scorer Class", ->
       playerThree = {
         id:"as359012f3521",
         meanStrength:23,
-        standardDeviation:(25/3),
+        standardDeviation:0.2,
         gameRanking:0
       }
+
     it "Should adjust rankings properly", ->
       oldPlayerArray = [playerOne, playerTwo,playerThree]
       updatedPlayerArray = scorer.updatePlayerSkills oldPlayerArray
       #TODO: manually calculate the correct values and check against the program
-      console.log "Player One Old Score:#{oldPlayerArray[2].meanStrength}, New Score:#{updatedPlayerArray[2].meanStrength}"
-      console.log "Player One Old stddev:#{oldPlayerArray[1].standardDeviation}, New stddev:#{updatedPlayerArray[1].standardDeviation}"
+      #console.log "Player Three Old Score:#{oldPlayerArray[0].meanStrength}, New Score:#{updatedPlayerArray[0].meanStrength}"
+      #console.log "Player Thee Old stddev:#{oldPlayerArray[0].standardDeviation}, New stddev:#{updatedPlayerArray[0].standardDeviation}"
       expect(updatedPlayerArray[0].meanStrength).toBeLessThan oldPlayerArray[0].meanStrength
     it "Shouldn't adjust rankings if two identical players draw against each other", ->
       return

@@ -9,7 +9,7 @@ An implementation of the Bayesian-approximation based game ranking system descri
 ##Usage
 **NOTE**: This section is subject to change until the package reaches its first release. Use at your own risk.
 
-###`updatePlayerSkills(playerAndScoreObjectsArray)`
+###`updatePlayerSkills`
 
 ---
 
@@ -28,7 +28,7 @@ The object may have other properties; they will not be modified.
 
 The output data is a copy of the input data with updated `meanStrength` and `standardDeviation` properties.
 
-###`constructor(scoreUncertainty = (25/6),k=0.0001,scoreStandardDeviationCoefficient=1.8)`
+###`constructor`
 
 ---
 
@@ -45,7 +45,7 @@ that standard deviation is never negative.)
 This parameter is used to calculate a player's score from their mean strength and standard deviation
 (the calculation is `meanStrength` - `scoreStandardDeviationCoefficient` * `standardDeviation`)
 
-###`calculatePlayerScoreFromPlayerMetrics(playerMeanStrength, playerStandardDeviation)`
+###`calculatePlayerScoreFromPlayerMetrics`
 
 ---
 

@@ -62,7 +62,6 @@ would be to either file issues or [email me](mailto:michael@codecombat.com).
 1. Prepare interface for first release
 1. Write more tests
 1. Manually verify that the program produces correct output by generating an example from the paper
-1. Publish on _npm_
 
 
 ##License

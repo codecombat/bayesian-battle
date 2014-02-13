@@ -17,7 +17,7 @@ An implementation of the Bayesian-approximation based game ranking system descri
 
 The input data format consists of an array of objects that have three properties:
 
-1. `playerID` : a unique value to identify the given player object.
+1. `id` : a unique value to identify the given player object.
 1. `meanStrength` : the mean strength metric of the player(μ). For new players, this should be 25.
 1. `standardDeviation` : the standard deviation of the mean strength of the player(σ). For new players, this should be 25/3.
 1. `gameRanking` : A zero-based ranking of the player in the game. Lower is better. Two players draw if they have the same ranking.

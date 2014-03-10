@@ -1,6 +1,6 @@
 {
     "name": "bayesian-battle",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "author": "Michael Schmatz <michael@codecombat.com> (http://github.com/schmatz)",
     "description":"An implementation of a Bayesian-approximation based game ranking system described by Weng and Lin and used by HackerRank.",
     "keywords":["bayesian","scoring","ranking"],

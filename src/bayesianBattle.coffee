@@ -68,7 +68,7 @@ class BayesianBattle
     throw new Error("Input array must contain two objects or more") if playerAndScoreObjectsArray.length <=1
 
   validatePlayerObjectValues: (playerAndScoreObject, arrayLength) ->
-    throw new Error("Mean strength must be greater than 0.") if playerAndScoreObject.meanStrength <= 0
+    #throw new Error("Mean strength must be greater than 0.") if playerAndScoreObject.meanStrength <= 0
     throw new Error("Standard Deviation must be greater than 0") if playerAndScoreObject.standardDeviation <=0
     throw new Error("Game ranking must be greater than or equal to 0") if playerAndScoreObject.gameRanking < 0
     throw new Error("Game ranking must be less than number of players") if playerAndScoreObject.gameRanking >= arrayLength

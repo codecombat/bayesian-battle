@@ -68,16 +68,6 @@ describe "Bayesian Battle Class", ->
       playerObjectArray = [playerOne]
       expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Input array must contain two objects or more"))
 
-    it "should enforce that mean strength is greater than 0", ->
-      playerThree = {
-        id:"as359012f3521",
-        meanStrength:-5,
-        standardDeviation:5,
-        gameRanking:1
-      }
-      playerObjectArray = [playerOne,playerTwo,playerThree]
-      expect(scorer.updatePlayerSkills.bind(scorer,playerObjectArray)).toThrow(new Error("Mean strength must be greater than 0."))
-
     it "should enforce that standard deviation is greater than 0", ->
       playerThree = {
         id:"as359012f3521",
